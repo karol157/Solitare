@@ -1,0 +1,71 @@
+Screen {
+    align: center middle;
+    background: $primary-background;
+}
+
+#main-menu-container {
+    width: auto;
+    height: auto;
+    max-width: 60;
+    padding: 2 4;
+    background: $panel-darken-1;
+    border: thick $primary-background-lighten-2;
+    border-title-align: center;
+    border-title-style: bold;
+}
+
+#menu-title {
+    content-align: center middle;
+    width: 100%;
+    padding: 1 0 2 0;
+    text-style: bold underline;
+    color: $text;
+}
+
+#menu-options {
+    align: center middle;
+    width: auto;
+    height: auto;
+}
+
+#menu-options > Button {
+    width: 100%;
+    margin: 1 0;
+    min-width: 25;
+}
+
+Button#exit_game {
+    /* background: $error; */ /* Example to make it red */
+}
+
+.content-screen-container {
+    align: center top;
+    padding-top: 2;
+}
+
+.content-box {
+    padding: 1 2;
+    width: 100%;
+    max-width: 100;
+    height: auto;
+    background: $panel;
+    border: round $primary;
+    margin-top: 1;
+}
+
+.content-title {
+    width: 100%;
+    content-align: center middle;
+    padding-bottom: 1;
+    text-style: bold;
+}
+
+.content-text {
+    width: 100%;
+    padding: 1;
+}
+
+.button-container-centered {
+    align: center middle;
+    padding-top: 1;
+}
