@@ -1,9 +1,5 @@
-from operator import truediv
-
 from textual import events
-from textual.app import App, ComposeResult
 from textual.widgets import Static
-from textual.reactive import reactive
 import asyncio
 
 class Timer:
@@ -17,7 +13,6 @@ class Timer:
     def stop(self):
         self.timer.cancel()
     def reset(self):
-        self.stop()
         self.minutes = 0
         self.seconds = 0
 
@@ -27,7 +22,7 @@ class Timer:
             self.seconds += 1
             if self.seconds >= 60:
                 self.minutes += 1
-                self.seconds = 0
+                self.seconds = 00
 
 class Score:
     def __init__(self):
@@ -37,7 +32,7 @@ class Score:
         self.score += value
 
     def reset(self):
-        self.score = 0
+        self.score = 00
 
 
 class Information(Static):
@@ -50,6 +45,10 @@ class Information(Static):
     async def loop(self):
         self.timer.start()
         while True:
-            await asyncio.sleep(0.5)
-            self.update(f"Time: {self.timer.minutes}:{self.timer.seconds}\n"
+            await asyncio.sleep(0.0001)
+            self.update(f"Time: {self.timer.minutes}:{self.timer.seconds} min\n"
                         f"Score: {self.score.score}")
+
+    def reset(self):
+        self.timer.reset()
+        self.score.reset()

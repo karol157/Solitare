@@ -11,6 +11,7 @@ class CardModel:
         self.suit = suit
         self.properties = properties
 
+
 class CardRenderer:
     def __init__(self, model: CardModel):
         self.model = model
@@ -90,7 +91,7 @@ class ModelValidator:
         Returns:
             bool: True if the selected card can be placed on the target row, False otherwise.
         """
-        rows, _, deck = Board.Board.get_rows()
+        rows, _, deck = self.main_model.parent_board.get_rows()
         cards_order = ['A','2','3','4','5','6','7','8','9','10','J','Q','K']
 
         src_row = int(Card.selected_allocation[0])
@@ -128,6 +129,8 @@ class ModelValidator:
                 self.get_color(source_suit) != self.get_color(top_suit)
                 and cards_order.index(source_fig) + 1 == cards_order.index(top_fig)
             )
+
+
 class Card(Static):
     selected = False
     selected_allocation = []
@@ -146,12 +149,14 @@ class Card(Static):
         self.update(self.card_render.render())
 
     def _on_click(self, event: events.Click) -> None:
-
         def reset_selection():
             self.styles.offset = (0, 0)
             Card.selected = False
             Card.selected_allocation.clear()
-        rows, properties, deck = Board.Board.get_rows()
+            self.parent_board.draw_card()
+
+        rows, properties, deck = self.parent_board.get_rows()
+
 
         event.stop()
 
@@ -163,6 +168,7 @@ class Card(Static):
 
             if Card.selected_allocation[0] == self.allocation[0] and Card.selected_allocation[1] not in ['D', 'ST'] and self.allocation[1] not in ['D', 'ST']:
                 reset_selection()
+                self.parent_board.draw_card()
             else:
                 target_row = int(self.allocation[0])
                 if str(Card.selected_allocation[1]).isdigit():
@@ -181,6 +187,7 @@ class Card(Static):
 
                     if Card.selected_allocation[1] == 'ST':
                         deck[int(self.allocation[0])].append(deck[5].pop())
+                        self.parent_board.draw_card()
                     elif str(Card.selected_allocation[1]).isdigit():
                         card = rows[source_row].pop()
                         properties[source_row].pop()
@@ -189,6 +196,7 @@ class Card(Static):
                             properties[source_row][-1] = 'gfs'
                         except IndexError:
                             pass
+                        self.parent_board.draw_card()
 
                     Card.selected = False
                     Card.selected_allocation.clear()
@@ -215,10 +223,14 @@ class Card(Static):
                 if str(Card.selected_allocation[1]).isdigit(): #Normal card
                     moving_cards = rows[source_row][source_index:]
                     moving_properties = properties[source_row][source_index:]
+
                     rows[target_row].extend(moving_cards)
                     properties[target_row].extend(moving_properties)
+
                     del rows[source_row][source_index:]
                     del properties[source_row][source_index:]
+
+                    self.parent_board.draw_card()
 
                 Card.selected = False
                 Card.selected_allocation.clear()
@@ -227,13 +239,13 @@ class Card(Static):
             if self.properties.card_type == 'D' or (self.properties.card_type == 'ST' and not deck[5]):
                 return
             if self.properties.card_type == 'STS' and deck[4]:
-                Board.Board.stock2.append(Board.Board.stock1.pop())
+                self.parent_board.stock2.append(self.parent_board.stock1.pop())
                 self.parent_board.draw_card()
                 return
             else:
                 if self.properties.card_type == 'STS' and not deck[4]:
-                    Board.Board.stock1 = list(reversed(Board.Board.stock2))
-                    Board.Board.stock2 = []
+                    self.parent_board.stock1 = list(reversed(self.parent_board.stock2))
+                    self.parent_board.stock2 = []
                     self.parent_board.draw_card()
                 else:
                     if self.properties.is_visible and not self.properties.basic:
@@ -251,12 +263,11 @@ class Card(Static):
         self.model.properties = properties
 
         self.update(self.card_render.render())
-    @staticmethod
-    def update_row_properties():
+    def update_row_properties(self):
         properties = [
-            Board.Board.row1_properties, Board.Board.row2_properties, Board.Board.row3_properties,
-            Board.Board.row4_properties, Board.Board.row5_properties, Board.Board.row6_properties,
-            Board.Board.row7_properties
+            self.parent_board.row1_properties, self.parent_board.row2_properties, self.parent_board.row3_properties,
+            self.parent_board.row4_properties, self.parent_board.row5_properties, self.parent_board.row6_properties,
+            self.parent_board.row7_properties
         ]
 
         for prop_row in properties:

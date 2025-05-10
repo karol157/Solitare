@@ -3,6 +3,7 @@ from textual.screen import Screen
 
 from game.Card import Card
 from game.Properties import Properties
+from game import Information
 
 import random
 from textual.containers import Vertical, Horizontal
@@ -12,36 +13,40 @@ from textual.app import ComposeResult
 
 
 class Board(Widget):
-    row1 = []
-    row2 = []
-    row3 = []
-    row4 = []
-    row5 = []
-    row6 = []
-    row7 = []
-    row1_properties = []
-    row2_properties = []
-    row3_properties = []
-    row4_properties = []
-    row5_properties = []
-    row6_properties = []
-    row7_properties = []
-    desk_1 = []
-    desk_2 = []
-    desk_3 = []
-    desk_4 = []
-    stock1 = []
-    stock2 = []
+    def __init__(self ,**kwargs):
+        super().__init__(**kwargs)
+        self.row1 = []
+        self.row2 = []
+        self.row3 = []
+        self.row4 = []
+        self.row5 = []
+        self.row6 = []
+        self.row7 = []
+        self.row1_properties = []
+        self.row2_properties = []
+        self.row3_properties = []
+        self.row4_properties = []
+        self.row5_properties = []
+        self.row6_properties = []
+        self.row7_properties = []
+        self.desk_1 = []
+        self.desk_2 = []
+        self.desk_3 = []
+        self.desk_4 = []
+        self.stock1 = []
+        self.stock2 = []
     def compose(self) -> ComposeResult:
         with Horizontal(id="table"):
             with Horizontal(id="stock"):
                 for i in range(2):
-                    with Vertical():
-                        yield Card(properties=Properties('s', order='s'), parent_board=self, id=f"stock{i}")
+                    with Vertical(id=f"stock{i}"):
+                        yield Card(properties=Properties('s', order='s'), parent_board=self)
+            with Horizontal(id="Information"):
+                yield Information.Information(id="Information-object")
             with Horizontal(id="deck"):
-                for i in range(4):
-                    with Vertical():
-                        yield Card(properties=Properties('s'), allocation=[i, 'x'], parent_board=self, id=f"deck{i}")
+                for i in range(5):
+                    with Vertical(id=f"deck{i}"):
+                        yield Card(properties=Properties('s'), allocation=[i, 'x'], parent_board=self)
 
         yield Vertical(
             Static(id="divider"),
@@ -56,6 +61,7 @@ class Board(Widget):
 
     def draw_card(self):
         rows, properties, decks = self.get_rows()
+
         for i, row in enumerate(rows):
             container = self.query_one(f"#foundation{i}", Vertical)
             if not row:
@@ -99,9 +105,8 @@ class Board(Widget):
                         card_obj.styles.offset = (0,0)
                     container.mount(card_obj)
 
-    @staticmethod
-    def random_card() -> None:
-        rows, _, _ = Board.get_rows()
+    def random_card(self) -> None:
+        rows, _, _ = self.get_rows()
         cards = ['2♥', '3♥', '4♥', '5♥', '6♥', '7♥', '8♥', '9♥', '10♥', 'J♥', 'Q♥', 'K♥', 'A♥', '2♠', '3♠', '4♠','5♠',
                 '6♠', '7♠', '8♠', '9♠', '10♠', 'J♠', 'Q♠', 'K♠', 'A♠', '2♦', '3♦', '4♦', '5♦', '6♦', '7♦', '8♦', '9♦',
                 '10♦', 'J♦', 'Q♦', 'K♦', 'A♦', '2♣', '3♣', '4♣', '5♣','6♣', '7♣', '8♣', '9♣', '10♣', 'J♣', 'Q♣', 'K♣', 'A♣']
@@ -112,22 +117,20 @@ class Board(Widget):
                 row.append(choice)
                 cards.remove(choice)
 
-        Board.stock1 = cards
+        self.stock1 = cards
 
-        random.shuffle(Board.stock1)
+        random.shuffle(self.stock1)
 
-    @staticmethod
-    def _generate_properties():
-        rows, properties, _ = Board.get_rows()
+    def generate_properties(self):
+        rows, properties, _ = self.get_rows()
 
         for i, row in enumerate(properties):
             if len(rows[i]) > 0:
                 row.extend(["gph"] * (len(rows[i]) - 1))
                 row.append("gfs")
 
-    @staticmethod
-    def get_rows():
-        return [Board.row1, Board.row2,Board.row3,Board.row4,Board.row5,Board.row6,Board.row7], [Board.row1_properties, Board.row2_properties, Board.row3_properties, Board.row4_properties, Board.row5_properties, Board.row6_properties, Board.row7_properties],[Board.desk_1, Board.desk_2, Board.desk_3, Board.desk_4, Board.stock1, Board.stock2]
+    def get_rows(self):
+        return [self.row1, self.row2,self.row3,self.row4,self.row5,self.row6,self.row7], [self.row1_properties, self.row2_properties, self.row3_properties, self.row4_properties, self.row5_properties, self.row6_properties, self.row7_properties],[self.desk_1, self.desk_2, self.desk_3, self.desk_4, self.stock1, self.stock2]
 
     @staticmethod
     def parse_to_property(value: str):
@@ -136,13 +139,15 @@ class Board(Widget):
         is_visible = value[2] == 's'
         return Properties(card_type, is_full, is_visible)
 
-    @staticmethod
-    def check_win():
-        return (len(Board.desk_1) +len(Board.desk_2) +len(Board.desk_3) +len(Board.desk_4)) == 52
+    def check_win(self):
+        return (len(self.desk_1) +len(self.desk_2) +len(self.desk_3) +len(self.desk_4)) == 52
 
     @staticmethod
     def reset_game(board):
-        rows, properties, deck = Board.get_rows()
+        rows, properties, deck = board.get_rows()
+
+        information = board.query_one("#Information-object")
+        information.reset()
 
         for i in rows:
             i.clear()
@@ -150,8 +155,8 @@ class Board(Widget):
             j.clear()
         for k in deck:
             k.clear()
-        Board.random_card()
-        Board._generate_properties()
+        board.random_card()
+        board.generate_properties()
         board.draw_card()
 
 
