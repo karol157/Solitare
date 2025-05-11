@@ -158,18 +158,15 @@ class Card(Static):
 
         rows, properties, deck = self.parent_board.get_rows()
 
-
         event.stop()
 
         if Card.selected:
             if not self.validator.can_put_it_here():
                 reset_selection()
-                self.parent_board.draw_card()
                 return
 
             if Card.selected_allocation[0] == self.allocation[0] and Card.selected_allocation[1] not in ['D', 'ST'] and self.allocation[1] not in ['D', 'ST']:
                 reset_selection()
-                self.parent_board.draw_card()
             else:
                 target_row = int(self.allocation[0])
                 if str(Card.selected_allocation[1]).isdigit():
@@ -181,7 +178,6 @@ class Card(Static):
                 if self.properties.card_type == 'D':
                     if not self.validator.can_put_it_here():
                         reset_selection()
-                        self.parent_board.draw_card()
                         return
 
                     source_row = int(Card.selected_allocation[0])
@@ -204,7 +200,6 @@ class Card(Static):
                     if self.parent_board.check_win():
                         self.app.push_screen(WinScreen())
                     self.parent_board.draw_card()
-
                     return
 
                 if Card.selected_allocation[1] == 'ST' and source_row == 5: #Stock
@@ -215,14 +210,10 @@ class Card(Static):
                             properties[target_row][-2] = 'gps'
                         except IndexError:
                             pass
-                        Card.selected = False
-                        Card.selected_allocation.clear()
-                        self.parent_board.draw_card()
+                        reset_selection()
                         return
                     else:
-                        Card.selected = False
-                        Card.selected_allocation.clear()
-                        self.parent_board.draw_card()
+                        reset_selection()
                         return
                 if str(Card.selected_allocation[1]).isdigit(): #Normal card
                     moving_cards = rows[source_row][source_index:]
@@ -236,11 +227,11 @@ class Card(Static):
 
                     self.parent_board.draw_card()
 
-                Card.selected = False
-                Card.selected_allocation.clear()
+                reset_selection()
                 self.styles.offset = (0, 0)
         else:
             if self.properties.card_type == 'D' or (self.properties.card_type == 'ST' and not deck[5]):
+                self.parent_board.draw_card()
                 return
             if self.properties.card_type == 'STS' and deck[4]:
                 self.parent_board.stock2.append(self.parent_board.stock1.pop())
@@ -255,6 +246,7 @@ class Card(Static):
                     if self.properties.is_visible and not self.properties.basic:
                         Card.selected = True
                         Card.selected_allocation = [self.allocation[0], self.allocation[-1]]
+                        self.parent_board.draw_card()
                         self.styles.offset = (0, 2)
 
         self.update_row_properties()
