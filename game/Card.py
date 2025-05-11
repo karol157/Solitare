@@ -2,6 +2,7 @@ from textual import events
 
 from game import Board
 from game.Properties import Properties
+from game.win import WinScreen
 
 from textual.widgets import Static
 
@@ -200,7 +201,10 @@ class Card(Static):
 
                     Card.selected = False
                     Card.selected_allocation.clear()
+                    if self.parent_board.check_win():
+                        self.app.push_screen(WinScreen())
                     self.parent_board.draw_card()
+
                     return
 
                 if Card.selected_allocation[1] == 'ST' and source_row == 5: #Stock

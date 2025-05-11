@@ -45,7 +45,7 @@ class MainMenuScreen(Screen):
 
 class SolitaireApp(App[None]):
 
-    CSS_PATH = ['../../src/menu.tcss', "../../src/board.tcss"]
+    CSS_PATH = ['../../src/menu.tcss', "../../src/board.tcss", '../../src/win.tcss']
     TITLE = "Solitaire"
 
     def on_mount(self) -> None:

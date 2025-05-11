@@ -1,9 +1,11 @@
+from textual import events
 from textual.binding import Binding
 from textual.screen import Screen
 
 from game.Card import Card
 from game.Properties import Properties
 from game import Information
+from game.win import WinScreen
 
 import random
 from textual.containers import Vertical, Horizontal
@@ -171,5 +173,5 @@ class GameScreen(Screen):
         yield Footer()
 
     def action_reset_game(self):
-        board = self.query_one('#board')
+        board = self.query_one('#board', Board)
         Board.reset_game(board)
