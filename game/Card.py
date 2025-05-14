@@ -5,7 +5,8 @@ from textual.widgets import Static
 from game import Board
 from game.Properties import Properties
 from game.win import WinScreen
-
+from game.Settings import Settings
+from time import sleep
 
 class CardModel:
     def __init__(self, figure: str, suit: str, properties: Properties):
@@ -147,6 +148,7 @@ class Card(Static):
         self.model = CardModel(self.figure, self.color, self.properties)
         self.validator = ModelValidator(self, self.model)
         self.card_render = CardRenderer(self.model)
+        self.settings = Settings()
 
     def on_mount(self):
         self.update(self.card_render.render())
@@ -156,6 +158,7 @@ class Card(Static):
             self.styles.offset = (0, 0)
             Card.selected = False
             Card.selected_allocation.clear()
+            self.update_row_properties()
             self.parent_board.draw_card()
 
         rows, properties, deck = self.parent_board.get_rows()
@@ -169,6 +172,7 @@ class Card(Static):
 
             if Card.selected_allocation[0] == self.allocation[0] and Card.selected_allocation[1] not in ['D', 'ST'] and self.allocation[1] not in ['D', 'ST']:
                 reset_selection()
+                return
             else:
                 target_row = int(self.allocation[0])
                 if str(Card.selected_allocation[1]).isdigit():
@@ -186,7 +190,6 @@ class Card(Static):
 
                     if Card.selected_allocation[1] == 'ST':
                         deck[int(self.allocation[0])].append(deck[5].pop())
-                        self.parent_board.draw_card()
                     elif str(Card.selected_allocation[1]).isdigit():
                         card = rows[source_row].pop()
                         properties[source_row].pop()
@@ -195,7 +198,6 @@ class Card(Static):
                             properties[source_row][-1] = 'gfs'
                         except IndexError:
                             pass
-                        self.parent_board.draw_card()
 
                     Card.selected = False
                     Card.selected_allocation.clear()
@@ -227,7 +229,6 @@ class Card(Static):
                     del rows[source_row][source_index:]
                     del properties[source_row][source_index:]
 
-                    self.parent_board.draw_card()
 
                 reset_selection()
                 self.styles.offset = (0, 0)
@@ -235,24 +236,31 @@ class Card(Static):
             if self.properties.card_type == 'D' or (self.properties.card_type == 'ST' and not deck[5]):
                 self.parent_board.draw_card()
                 return
-            if self.properties.card_type == 'STS' and deck[4]:
-                self.parent_board.stock2.append(self.parent_board.stock1.pop())
+            elif self.properties.card_type == 'STS' and deck[4]:
+                if self.settings.get("hard_level"):
+                    move_count = min(3, len(self.parent_board.stock1))
+                    for _ in range(move_count):
+                        self.parent_board.stock2.append(self.parent_board.stock1.pop())
+                else:
+                    self.parent_board.stock2.append(self.parent_board.stock1.pop())
+                
+                if not self.parent_board.stock1 and self.settings.get("auto_shuffle"):
+                    self.parent_board.stock1 = list(reversed(self.parent_board.stock2))
+                    self.parent_board.stock2 = []
                 self.parent_board.draw_card()
                 return
             else:
                 if self.properties.card_type == 'STS' and not deck[4]:
                     self.parent_board.stock1 = list(reversed(self.parent_board.stock2))
                     self.parent_board.stock2 = []
-                    self.parent_board.draw_card()
                 else:
                     if self.properties.is_visible and not self.properties.basic:
                         Card.selected = True
                         Card.selected_allocation = [self.allocation[0], self.allocation[-1]]
-                        self.styles.offset = (0, 2)
-                        self.parent_board.draw_card()
+                        self.styles.offset = (0, 2) 
 
-        self.update_row_properties()
-        self.parent_board.draw_card()
+            self.update_row_properties()
+            self.parent_board.draw_card()
 
 
     def set_card(self, card: str, properties: str='gph'):

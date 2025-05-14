@@ -1,0 +1,25 @@
+#settings-grid {
+    grid-size: 2;
+    grid-columns: 1fr 2fr;
+    margin: 1 2;
+    padding: 2;
+}
+
+#settings-grid Label {
+    text-align: right;
+    padding-right: 1;
+}
+
+Switch {
+    width: auto;
+    min-width: 10;
+}
+
+Select {
+    width: 100%;
+    min-width: 20;
+    margin-left: 1;
+}
+
+Header { background: $primary; color: $text; }
+Footer { background: $secondary; color: $text; }

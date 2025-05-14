@@ -19,7 +19,7 @@ Card {
 }
 #deck {
     align-horizontal: right;
-    width: 75%;
+    width: 50%;
 }
 #stock {
     padding: 1 5;
@@ -40,4 +40,12 @@ Card {
 #top{
     align: center middle;
     height: 10;
+}
+
+#win-button{
+    width: 100%; 
+    align-horizontal: center;
+    padding: 10; 
+    position: absolute; 
+    margin-bottom: 0;
 }

@@ -5,7 +5,7 @@ from textual.screen import Screen
 from textual.widgets import Button, Header, Footer, Label
 
 from game.menu.Instructions import InstructionsScreen
-from game.menu.Settings import SettingsScreen
+from game.menu.SettingsScren import SettingsScreen
 from game.Board import GameScreen
 
 class MainMenuScreen(Screen):
@@ -45,7 +45,7 @@ class MainMenuScreen(Screen):
 
 class SolitaireApp(App[None]):
 
-    CSS_PATH = ['../../src/menu.tcss', "../../src/board.tcss", '../../src/win.tcss']
+    CSS_PATH = ['../../src/menu.tcss', "../../src/board.tcss", '../../src/win.tcss', '../../src/settings.tcss']
     TITLE = "Solitaire"
 
     def on_mount(self) -> None:

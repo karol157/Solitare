@@ -3,18 +3,20 @@ from textual.widgets import Static
 import asyncio
 
 class Timer:
-    seconds = 0
+    seconds = 00
     minutes = 0
-    def __init__(self):
+    def __init__(self, widget):
         self.timer = None
+        self.widget = widget
 
     def start(self):
-        self.timer =  asyncio.create_task(self.loop())
+        self.timer = asyncio.create_task(self.loop())
     def stop(self):
         self.timer.cancel()
     def reset(self):
         Timer.minutes = 0
         Timer.seconds = 0
+        self.start()
 
     async def loop(self):
         while True:
@@ -23,6 +25,7 @@ class Timer:
             if Timer.seconds >= 60:
                 Timer.minutes += 1
                 Timer.seconds = 00
+            self.widget.update(f"Time: {Timer.minutes}:{Timer.seconds:02d} min\n")
 
 class Score:
     score = 0
@@ -36,16 +39,16 @@ class Score:
 class Information(Static):
     def _on_mount(self, event: events.Mount) -> None:
         self.value = ""
-        self.timer = Timer()
+        self.timer = Timer(self)
+        self.timer.start()
         self.score = Score()
-        asyncio.create_task(self.loop())
+    '''        asyncio.create_task(self.loop())
 
     async def loop(self):
         self.timer.start()
         while True:
-            await asyncio.sleep(0.0001)
             self.update(f"Time: {Timer.minutes}:{Timer.seconds} min\n"
-                        f"Score: {Score.score}")
+                        f"Score: {Score.score}")'''
 
     def reset(self):
         self.timer.reset()
