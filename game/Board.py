@@ -1,6 +1,11 @@
 from textual import events
 from textual.binding import Binding
 from textual.screen import Screen
+from textual.containers import Vertical, Horizontal
+from textual.widget import Widget
+from textual.widgets import Static, Footer
+from textual.app import ComposeResult
+
 
 from game.Card import Card
 from game.Properties import Properties
@@ -8,11 +13,6 @@ from game import Information
 from game.win import WinScreen
 
 import random
-from textual.containers import Vertical, Horizontal
-from textual.widget import Widget
-from textual.widgets import Static, Footer
-from textual.app import ComposeResult
-
 
 class Board(Widget):
     def __init__(self ,**kwargs):
@@ -62,10 +62,10 @@ class Board(Widget):
         Board.reset_game(self)
 
     def draw_card(self):
-        rows, properties, decks = self.get_rows()
+        rows, properties, decks = self.get_rows() #works
 
         for i, row in enumerate(rows):
-            container = self.query_one(f"#foundation{i}", Vertical)
+            container = self.query_one(f"#foundation{i}", Vertical) #works
             if not row:
                 container.remove_children()
                 container.mount(Card(properties=Properties('s'), allocation=[i, 'x'], parent_board=self))
@@ -81,7 +81,6 @@ class Board(Widget):
                         else:
                             card.styles.offset = (0,0)
                     container.mount(card)
-
         for i, deck in enumerate(decks):
             if i < 4:
                 container = self.query_one(f"#deck{i}")

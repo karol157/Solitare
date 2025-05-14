@@ -1,10 +1,11 @@
 from textual import events
+from textual.widgets import Static
+
 
 from game import Board
 from game.Properties import Properties
 from game.win import WinScreen
 
-from textual.widgets import Static
 
 class CardModel:
     def __init__(self, figure: str, suit: str, properties: Properties):
@@ -62,6 +63,7 @@ class CardRenderer:
                     f"[black on white]│ ~~~~ │[/]\n"
                     f"[black on white]└──────┘[/]"
                 )
+
 
 class ModelValidator:
     def __init__(self, main_model, model: CardModel):
@@ -246,8 +248,8 @@ class Card(Static):
                     if self.properties.is_visible and not self.properties.basic:
                         Card.selected = True
                         Card.selected_allocation = [self.allocation[0], self.allocation[-1]]
-                        self.parent_board.draw_card()
                         self.styles.offset = (0, 2)
+                        self.parent_board.draw_card()
 
         self.update_row_properties()
         self.parent_board.draw_card()
