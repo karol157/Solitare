@@ -1,0 +1,50 @@
+Card {
+    width: auto;
+}
+
+#Information {
+    min-width: 16;
+    padding: 1
+}
+
+#foundations{
+    padding: 1;
+    width: 1fr;
+    height: 100%;
+}
+
+#table {
+    width: 100%;
+    height: 30%
+}
+#deck {
+    align-horizontal: right;
+    width: 50%;
+}
+#stock {
+    padding: 1 5;
+    width: 25%;
+    align-horizontal: left;
+}
+
+#deck > Vertical {
+    padding: 1 5;
+    width: auto;
+}
+
+#divider {
+    height: 1;
+    background: black;
+}
+
+#top{
+    align: center middle;
+    height: 10;
+}
+
+#auto_win{
+    width: auto; 
+    dock: bottom;
+    padding: 0 3; 
+    margin-bottom: 2;
+}
