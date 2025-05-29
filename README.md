@@ -66,7 +66,10 @@ Experience a rich, animated terminal UI with keyboard and mouse support, undo fu
 2. Run the game:
 
    ```bash
-   python main.py
+   python luncher.py
+   ```
+   ```cmd
+   py luncher.py
    ```
 
 ---
