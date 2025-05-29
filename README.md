@@ -114,7 +114,5 @@ Settings are stored in `game/config/settings.json` and can be changed through th
 
 ---
 
-## License
 
-MIT License — see the LICENSE file for details.
 
