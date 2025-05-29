@@ -49,19 +49,19 @@ Experience a rich, animated terminal UI with keyboard and mouse support, undo fu
    **Automatic (Linux):**  
    ```bash
    python lucher.py
-````
+   ```
 
-**Automatic (Windows):**
-
-```cmd
-py lucher.py
-```
-
-**Manual installation:**
-
-```bash
-pip install -r requirements.txt
-```
+   **Automatic (Windows):**
+  
+   ```cmd
+   py lucher.py
+   ```
+  
+   **Manual installation:**
+  
+   ```bash
+   pip install -r requirements.txt
+   ```
 
 2. Run the game:
 
