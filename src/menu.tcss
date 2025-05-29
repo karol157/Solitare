@@ -1,71 +1,85 @@
+/* Screen container settings */
 Screen {
-    align: center middle;
-    background: $primary-background;
+    align: center middle;           /* Center content horizontally and vertically */
+    background: $primary-background; /* Use primary background color variable */
 }
 
+/* Main menu container */
 #main-menu-container {
-    width: auto;
-    height: auto;
-    max-width: 60;
-    padding: 2 4;
-    background: $panel-darken-1;
-    border: thick $primary-background-lighten-2;
-    border-title-align: center;
-    border-title-style: bold;
+    width: auto;                   /* Width adapts to content */
+    height: auto;                  /* Height adapts to content */
+    max-width: 60;                 /* Maximum width of 60 units */
+    padding: 2 4;                  /* Vertical padding 2, horizontal padding 4 */
+    background: $panel-darken-1;  /* Darkened panel background color */
+    border: thick $primary-background-lighten-2; /* Thick border with a lighter primary background color */
+    border-title-align: center;   /* Border title aligned center */
+    border-title-style: bold;     /* Border title with bold text style */
 }
 
+/* Menu title styling */
 #menu-title {
-    content-align: center middle;
-    width: 100%;
-    padding: 1 0 2 0;
-    text-style: bold underline;
-    color: $text;
+    content-align: center middle; /* Center content horizontally and vertically */
+    width: 100%;                  /* Full width */
+    padding: 1 0 2 0;             /* Padding: top 1, right 0, bottom 2, left 0 */
+    text-style: bold underline;  /* Bold and underlined text */
+    color: $text;                /* Text color variable */
 }
 
+/* Container for menu options */
 #menu-options {
-    align: center middle;
-    width: auto;
-    height: auto;
+    align: center middle;         /* Center contents horizontally and vertically */
+    width: auto;                  /* Width adapts to content */
+    height: auto;                 /* Height adapts to content */
 }
 
+/* Buttons inside menu options */
 #menu-options > Button {
-    width: 100%;
-    margin: 1 0;
-    min-width: 25;
+    width: 100%;                  /* Buttons fill the container width */
+    margin: 1 0;                  /* Vertical margin 1 unit, no horizontal margin */
+    min-width: 25;                /* Minimum width of 25 units */
 }
 
+/* Example: styling for exit button */
+/* Uncomment and adjust to make exit button red */
+/*
 Button#exit_game {
-    /* background: $error; */ /* Example to make it red */
+    background: $error;
 }
+*/
 
+/* Content screen container */
 .content-screen-container {
-    align: center top;
-    padding-top: 2;
+    align: center top;            /* Center horizontally, align to top vertically */
+    padding-top: 2;               /* Top padding 2 units */
 }
 
+/* Content box styling */
 .content-box {
-    padding: 1 2;
-    width: 100%;
-    max-width: 100;
-    height: auto;
-    background: $panel;
-    border: round $primary;
-    margin-top: 1;
+    padding: 1 2;                 /* Padding: vertical 1, horizontal 2 */
+    width: 100%;                  /* Full width */
+    max-width: 100;               /* Maximum width of 100 units */
+    height: auto;                 /* Height adapts to content */
+    background: $panel;           /* Background color variable */
+    border: round $primary;       /* Rounded border with primary color */
+    margin-top: 1;                /* Margin top 1 unit */
 }
 
+/* Content title inside content box */
 .content-title {
-    width: 100%;
-    content-align: center middle;
-    padding-bottom: 1;
-    text-style: bold;
+    width: 100%;                  /* Full width */
+    content-align: center middle; /* Center content horizontally and vertically */
+    padding-bottom: 1;            /* Bottom padding 1 unit */
+    text-style: bold;             /* Bold text style */
 }
 
+/* Content text styling */
 .content-text {
-    width: 100%;
-    padding: 1;
+    width: 100%;                  /* Full width */
+    padding: 1;                  /* Padding 1 unit all around */
 }
 
+/* Centered button container */
 .button-container-centered {
-    align: center middle;
-    padding-top: 1;
+    align: center middle;         /* Center content horizontally and vertically */
+    padding-top: 1;               /* Top padding 1 unit */
 }

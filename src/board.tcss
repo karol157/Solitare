@@ -1,50 +1,62 @@
+/* Card elements will have automatic width based on content */
 Card {
     width: auto;
 }
 
+/* Information widget minimum width and padding */
 #Information {
-    min-width: 16;
-    padding: 1
+    min-width: 16;  /* Minimum width of 16 units */
+    padding: 1;     /* Padding of 1 unit on all sides */
 }
 
-#foundations{
-    padding: 1;
-    width: 1fr;
-    height: 100%;
+/* Foundations container styling */
+#foundations {
+    padding: 1;     /* Padding of 1 unit inside container */
+    width: 1fr;     /* Takes one fractional unit of available width */
+    height: 100%;   /* Full height of its parent */
 }
 
+/* Table container styling */
 #table {
-    width: 100%;
-    height: 30%
+    width: 100%;    /* Full width of parent */
+    height: 30%;    /* 30% height of parent */
 }
+
+/* Deck container aligned to the right, takes half width */
 #deck {
-    align-horizontal: right;
-    width: 50%;
+    align-horizontal: right; /* Align content horizontally to the right */
+    width: 50%;              /* Occupies 50% of the available width */
 }
+
+/* Stock container styling */
 #stock {
-    padding: 1 5;
-    width: 25%;
-    align-horizontal: left;
+    padding: 1 5;         /* Vertical padding 1, horizontal padding 5 */
+    width: 25%;           /* Occupies 25% of the available width */
+    align-horizontal: left; /* Align content horizontally to the left */
 }
 
+/* Vertical container inside deck with padding and automatic width */
 #deck > Vertical {
-    padding: 1 5;
-    width: auto;
+    padding: 1 5;    /* Padding: vertical 1, horizontal 5 */
+    width: auto;     /* Width adapts to content */
 }
 
+/* Divider style with fixed height and black background */
 #divider {
-    height: 1;
-    background: black;
+    height: 1;           /* Height of 1 unit */
+    background: black;   /* Black background color */
 }
 
-#top{
-    align: center middle;
-    height: 10;
+/* Top section aligned center middle with fixed height */
+#top {
+    align: center middle; /* Center content horizontally and vertically */
+    height: 10;           /* Fixed height of 10 units */
 }
 
-#auto_win{
-    width: auto; 
-    dock: bottom;
-    padding: 0 3; 
-    margin-bottom: 2;
+/* Auto-win section docked to bottom with padding and margin */
+#auto_win {
+    width: auto;          /* Width adapts to content */
+    dock: bottom;         /* Docked at the bottom of the parent */
+    padding: 0 3;         /* Vertical padding 0, horizontal padding 3 */
+    margin-bottom: 2;     /* Margin below of 2 units */
 }

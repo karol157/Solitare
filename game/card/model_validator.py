@@ -3,34 +3,87 @@ from game.card import Card
 
 
 class ModelValidator:
+    """Validates whether a card move is legal based on Solitaire rules."""
+
     def __init__(self, main_model, model: CardModel):
+        """
+        Args:
+            main_model: The UI card widget that owns this model.
+            model (CardModel): The data model for the card.
+        """
         self.main_model = main_model
         self.model = model
 
     @staticmethod
-    def get_color(suit):
-        """Returns the color of a card based on its suit.
+    def get_color(suit: str) -> str:
+        """
+        Get the color of a card based on its suit.
 
         Args:
-            suit (str): A single-character string representing the suit of the card.
+            suit (str): Card suit, e.g., '♥', '♠'.
 
         Returns:
-            str: 'red' if the suit is ♥ or ♦, 'black' otherwise.
+            str: 'red' for ♥ or ♦, 'black' otherwise.
         """
         return "red" if suit in "♥♦" else "black"
 
     def can_put_it_here(self) -> bool:
         """
-        Determines whether the selected card can be placed onto the target row.
-
-        The method checks if the move is legal according to Solitaire rules:
-        - A card can be placed on another card if it is one rank lower and of the opposite color.
-        - A King ('K') can be placed on an empty row.
+        Determines if the selected card(s) can be placed on the target card according to Solitaire rules.
 
         Returns:
-            bool: True if the selected card can be placed on the target row, False otherwise.
+            bool: True if the move is valid, False otherwise.
         """
-        return True
+        '''rows, _, deck = self.main_model.parent_board.get_rows()
+
+        # Card order from Ace to King
+        cards_order = ["A", "2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K"]
+
+        try:
+            # Get source card
+            src_col = int(Card.Card.selected_allocation[0])
+            src_pos = Card.Card.selected_allocation[1]
+            source_from_stock = src_pos == "ST"
+            src_idx = -1 if source_from_stock else int(src_pos)
+
+            if source_from_stock:
+                card_full = deck[src_col][-1]
+            else:
+                card_full = rows[src_col][src_idx]
+
+            source_fig, source_suit = card_full[:-1], card_full[-1]
+
+            # Get target
+            tgt_col = int(self.main_model.allocation[0])
+            target_type = self.model.properties.card_type
+
+            if target_type == "D":
+                # Foundation (suit pile)
+                foundation = deck[tgt_col]
+                if not foundation:
+                    return source_fig == "A"
+                top_full = foundation[-1]
+                top_fig, top_suit = top_full[:-1], top_full[-1]
+                return (
+                    source_suit == top_suit
+                    and cards_order.index(source_fig) == cards_order.index(top_fig) + 1
+                )
+
+            else:
+                # Tableau (column)
+                column = rows[tgt_col]
+                if not column:
+                    return source_fig == "K"
+                top_full = column[-1]
+                top_fig, top_suit = top_full[:-1], top_full[-1]
+                return (
+                    self.get_color(source_suit) != self.get_color(top_suit)
+                    and cards_order.index(source_fig) + 1 == cards_order.index(top_fig)
+                )
+
+        except (IndexError, ValueError, KeyError):
+            # Fail-safe: invalid allocation, missing cards, or corrupt data
+            return False'''
         rows, _, deck = self.main_model.parent_board.get_rows()
 
         cards_order = ["A", "2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K"]
@@ -48,8 +101,7 @@ class ModelValidator:
         source_fig, source_suit = card_full[:-1], card_full[-1]
 
         tgt_row = int(self.main_model.allocation[0])
-        target_is_deck = self.model.properties.card_type == "D"
-
+        target_is_deck = self.main_model.allocation[1] == "D"
         if target_is_deck:
             foundation = deck[tgt_row]
             if not foundation:

@@ -1,25 +1,38 @@
+/* Grid container for settings */
 #settings-grid {
-    grid-size: 2;
-    grid-columns: 1fr 2fr;
-    margin: 1 2;
-    padding: 2;
+    grid-size: 2;              /* Defines 2 rows or columns in the grid */
+    grid-columns: 1fr 2fr;     /* Two columns: first takes 1 fraction, second takes 2 fractions */
+    margin: 1 2;               /* Margin: vertical 1 unit, horizontal 2 units */
+    padding: 2;                /* Padding all around: 2 units */
 }
 
+/* Labels inside the settings grid */
 #settings-grid Label {
-    text-align: right;
-    padding-right: 1;
+    text-align: right;         /* Align label text to the right */
+    padding-right: 1;          /* Padding on the right: 1 unit */
 }
 
+/* Switch widget styling */
 Switch {
-    width: auto;
-    min-width: 10;
+    width: auto;               /* Width adjusts automatically */
+    min-width: 10;             /* Minimum width: 10 units */
 }
 
+/* Select (dropdown) widget styling */
 Select {
-    width: 100%;
-    min-width: 20;
-    margin-left: 1;
+    width: 100%;               /* Full width of the container */
+    min-width: 20;             /* Minimum width: 20 units */
+    margin-left: 1;            /* Left margin: 1 unit */
 }
 
-Header { background: $primary; color: $text; }
-Footer { background: $secondary; color: $text; }
+/* Header styling */
+Header {
+    background: $primary;      /* Background color using primary color variable */
+    color: $text;              /* Text color using text color variable */
+}
+
+/* Footer styling */
+Footer {
+    background: $secondary;    /* Background color using secondary color variable */
+    color: $text;              /* Text color using text color variable */
+}

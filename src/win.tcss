@@ -1,49 +1,51 @@
 #title {
-    text-align: center;
-    height: 3;
-    content-align: center middle;
-    color: gold;
-    /*bold: true;*/
+    text-align: center;           /* Horizontally center the text */
+    height: 3;                    /* Fixed height of 3 units */
+    content-align: center middle; /* Center content horizontally and vertically */
+    color: gold;                  /* Text color set to gold */
+    /*bold: true;*/               /* (commented out) could make text bold */
 }
 
-#row{
-    layout: vertical;
-    width: 1fr;
+#row {
+    layout: vertical;             /* Arrange children vertically */
+    width: 1fr;                   /* Take one fraction of available space */
 }
 
 #main-box {
-    border: round green;
-    width: 50%;
-    height: auto;
-    padding: 1;
-    background: $boost;
+    border: round green;          /* Rounded border with green color */
+    width: 50%;                   /* Width is 50% of the container */
+    height: auto;                 /* Height adjusts to content */
+    padding: 1;                   /* Padding of 1 unit on all sides */
+    background: $boost;           /* Background color from the variable $boost */
 }
 
 #message {
-    text-align: center;
-    height: 3;
-    content-align: center middle;
-    color: white;
+    text-align: center;           /* Center text horizontally */
+    height: 3;                   /* Fixed height of 3 units */
+    content-align: center middle; /* Center content horizontally and vertically */
+    color: white;                 /* Text color set to white */
 }
+
 #information {
-    text-align: center;
-    height: 9;
-    content-align: center middle;
-    color: white;
+    text-align: center;           /* Center text horizontally */
+    height: 4;                   /* Fixed height of 4 units */
+    content-align: center middle; /* Center content horizontally and vertically */
+    color: white;                 /* Text color set to white */
 }
 
 #button-box {
-    align: center bottom;
-    padding-top: 1;
-    padding-left: 3;
-    padding-right: 3;
+    align: center bottom;         /* Align children centered horizontally and bottom vertically */
+    padding-top: 1;               /* Padding of 1 unit at the top */
+    padding-left: 3;              /* Padding of 3 units on the left */
+    padding-right: 3;             /* Padding of 3 units on the right */
 }
 
 #exit {
-    width: 1fr;
-    dock: bottom;
+    width: 1fr;                  /* Take one fraction of available space */
+    dock: bottom;                /* Dock to the bottom of the container */
 }
+
 #replay {
-    width: 1fr;
-    dock: bottom;
+    width: 1fr;                  /* Take one fraction of available space */
+    dock: bottom;                /* Dock to the bottom of the container */
 }

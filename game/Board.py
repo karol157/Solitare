@@ -268,7 +268,6 @@ class Board(Widget):
         return Properties(card_type, is_full, is_visible)
 
     def check_win(self) -> bool:
-        return True 
         _, properties, _ = self.get_rows()
         if self.settings.get("auto_win_mode") == "never":
             return (
@@ -277,9 +276,10 @@ class Board(Widget):
                 + len(self.desk_3)
                 + len(self.desk_4)
             ) == 52
-        for prop_list in properties:
-            for prop in prop_list:
-                if "h" in prop:
+        for i in range(7):
+            container = self.query_one(f"#foundation{i}", Vertical)
+            for child in container.children:
+                if not child.properties.is_visible:
                     return False
 
         return True
